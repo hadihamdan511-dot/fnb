@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flats N' Bites — As Flat As Your Stomach</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --red: #e31e24;
+      --red-dark: #b51519;
+      --yellow: #f5c518;
+      --yellow-light: #ffd84d;
+      --black: #0f0f0f;
+      --dark: #1a1a1a;
+      --white: #ffffff;
+      --cream: #fff9f0;
+      --gray: #888;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
+
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--red); }
+
+    /* NAVBAR */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      padding: 15px 60px; display: flex; justify-content: space-between;
+      align-items: center; background: rgba(15,15,15,0.97);
+      border-bottom: 2px solid var(--red);
+      backdrop-filter: blur(10px);
+    }
+    .nav-logo img { height: 50px; object-fit: contain; }
+    .nav-links { display: flex; gap: 30px; align-items: center; }
+    .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--yellow); }
+    .nav-order { background: var(--red) !important; color: white !important; padding: 10px 22px; border-radius: 3px; font-weight: 700 !important; }
+    .nav-order:hover { background: var(--red-dark) !important; }
+
+    /* HERO */
+    .hero {
+      height: 100vh; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; text-align: center;
+    }
+    .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #1a0000 0%, #0f0f0f 50%, #1a0800 100%); }
+    .hero-pattern {
+      position: absolute; inset: 0; opacity: 0.04;
+      background-image: repeating-linear-gradient(45deg, #e31e24 0, #e31e24 1px, transparent 0, transparent 50%);
+      background-size: 20px 20px;
+    }
+    .hero-content { position: relative; z-index: 1; padding: 0 20px; }
+    .hero-logo { width: 140px; margin: 0 auto 30px; }
+    .hero-logo img { width: 100%; filter: drop-shadow(0 0 30px rgba(227,30,36,0.5)); }
+    .hero-tag { font-size: 11px; letter-spacing: 6px; color: var(--yellow); margin-bottom: 20px; font-family: 'Oswald', sans-serif; }
+    .hero-title { font-family: 'Oswald', sans-serif; font-size: clamp(52px, 10vw, 100px); font-weight: 700; line-height: 0.9; text-transform: uppercase; margin-bottom: 25px; }
+    .hero-title .red { color: var(--red); }
+    .hero-title .yellow { color: var(--yellow); }
+    .hero-sub { font-size: 14px; color: rgba(255,255,255,0.5); letter-spacing: 4px; margin-bottom: 50px; font-family: 'Oswald', sans-serif; }
+    .hero-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+    .btn-red { padding: 16px 45px; background: var(--red); color: white; text-decoration: none; font-size: 12px; letter-spacing: 3px; font-weight: 700; font-family: 'Oswald', sans-serif; transition: all 0.3s; }
+    .btn-red:hover { background: var(--red-dark); transform: translateY(-2px); }
+    .btn-yellow { padding: 16px 45px; background: var(--yellow); color: var(--black); text-decoration: none; font-size: 12px; letter-spacing: 3px; font-weight: 700; font-family: 'Oswald', sans-serif; transition: all 0.3s; }
+    .btn-yellow:hover { background: var(--yellow-light); transform: translateY(-2px); }
+    .hero-scroll { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .hero-scroll span { font-size: 9px; letter-spacing: 3px; color: var(--gray); }
+    .scroll-arrow { color: var(--red); animation: bounce 2s ease-in-out infinite; font-size: 18px; }
+    @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+    /* MARQUEE */
+    .marquee { background: var(--red); padding: 12px 0; overflow: hidden; white-space: nowrap; }
+    .marquee-inner { display: inline-block; animation: marquee 18s linear infinite; }
+    .marquee span { font-size: 12px; font-weight: 700; letter-spacing: 4px; color: white; margin: 0 30px; text-transform: uppercase; font-family: 'Oswald', sans-serif; }
+    .marquee span.dot { color: var(--yellow); }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* SECTION */
+    .section-header { text-align: center; margin-bottom: 60px; padding: 0 20px; }
+    .section-header .tag { font-size: 11px; letter-spacing: 5px; color: var(--yellow); margin-bottom: 12px; display: block; font-family: 'Oswald', sans-serif; }
+    .section-header h2 { font-family: 'Oswald', sans-serif; font-size: clamp(36px, 6vw, 60px); font-weight: 700; text-transform: uppercase; line-height: 1; }
+    .section-header h2 .red { color: var(--red); }
+    .section-header h2 .yellow { color: var(--yellow); }
+    .section-header p { color: var(--gray); font-size: 14px; margin-top: 12px; }
+
+    /* FEATURED DISHES */
+    .featured { padding: 100px 40px; background: var(--black); }
+    .featured-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; max-width: 1300px; margin: 0 auto; }
+    .featured-card { position: relative; overflow: hidden; cursor: pointer; }
+    .featured-card img { width: 100%; height: 350px; object-fit: cover; transition: transform 0.6s ease; filter: brightness(0.85); }
+    .featured-card:hover img { transform: scale(1.06); filter: brightness(1); }
+    .featured-card-overlay { position: absolute; inset: 0; background: linear-gradient(transparent 40%, rgba(15,15,15,0.95)); }
+    .featured-card-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 25px 20px; }
+    .featured-card-info h3 { font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 600; margin-bottom: 5px; letter-spacing: 1px; }
+    .featured-card-info .price { color: var(--yellow); font-size: 22px; font-weight: 700; font-family: 'Oswald', sans-serif; }
+    .featured-card.large { grid-column: span 2; }
+    .featured-card.large img { height: 450px; }
+    .featured-badge { position: absolute; top: 15px; left: 15px; background: var(--red); color: white; font-size: 10px; padding: 5px 12px; font-weight: 700; letter-spacing: 2px; font-family: 'Oswald', sans-serif; }
+    .featured-badge.yellow { background: var(--yellow); color: var(--black); }
+
+    /* MENU TABS */
+    .menu-section { padding: 100px 40px; background: var(--dark); }
+    .menu-tabs { display: flex; justify-content: center; gap: 5px; margin-bottom: 60px; flex-wrap: wrap; padding: 0 20px; }
+    .menu-tab { padding: 12px 25px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); font-size: 11px; letter-spacing: 2px; cursor: pointer; transition: all 0.3s; font-family: 'Oswald', sans-serif; font-weight: 500; text-transform: uppercase; border-radius: 2px; }
+    .menu-tab:hover, .menu-tab.active { background: var(--red); border-color: var(--red); color: white; }
+    .menu-content { display: none; max-width: 1100px; margin: 0 auto; }
+    .menu-content.active { display: block; }
+
+    /* MENU ITEMS */
+    .menu-category { margin-bottom: 50px; }
+    .menu-category-title { font-family: 'Oswald', sans-serif; font-size: 24px; font-weight: 700; text-transform: uppercase; color: var(--yellow); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid rgba(245,197,24,0.2); letter-spacing: 2px; }
+    .menu-items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+    .menu-item { background: rgba(255,255,255,0.03); padding: 20px; border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s; display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; }
+    .menu-item:hover { background: rgba(227,30,36,0.08); border-color: rgba(227,30,36,0.3); }
+    .menu-item-left { flex: 1; }
+    .menu-item-name { font-family: 'Oswald', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 5px; letter-spacing: 1px; color: white; }
+    .menu-item-desc { font-size: 12px; color: var(--gray); line-height: 1.6; }
+    .menu-item-price { font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 700; color: var(--yellow); white-space: nowrap; }
+    .menu-item.full { grid-column: span 2; }
+
+    /* SAUCE/EXTRAS */
+    .extras-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+    .extra-item { background: rgba(255,255,255,0.03); padding: 15px; border: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; transition: all 0.3s; }
+    .extra-item:hover { background: rgba(245,197,24,0.07); border-color: rgba(245,197,24,0.2); }
+    .extra-item-name { font-size: 13px; color: rgba(255,255,255,0.8); }
+    .extra-item-price { font-family: 'Oswald', sans-serif; font-size: 16px; color: var(--yellow); font-weight: 600; }
+
+    /* SWEETS */
+    .sweets-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+
+    /* DRINKS */
+    .drinks-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; }
+    .drink-item { background: rgba(255,255,255,0.03); padding: 20px 15px; border: 1px solid rgba(255,255,255,0.05); text-align: center; transition: all 0.3s; }
+    .drink-item:hover { background: rgba(227,30,36,0.08); border-color: rgba(227,30,36,0.3); }
+    .drink-icon { font-size: 28px; margin-bottom: 10px; }
+    .drink-name { font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 8px; }
+    .drink-price { font-family: 'Oswald', sans-serif; font-size: 20px; color: var(--yellow); font-weight: 700; }
+
+    /* SHARING SECTION */
+    .sharing { padding: 100px 40px; background: var(--black); }
+    .sharing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 900px; margin: 0 auto; }
+    .sharing-card { background: linear-gradient(135deg, rgba(227,30,36,0.15), rgba(245,197,24,0.05)); border: 1px solid rgba(227,30,36,0.3); padding: 40px; text-align: center; position: relative; overflow: hidden; }
+    .sharing-card::before { content: ''; position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; background: radial-gradient(circle, rgba(227,30,36,0.05), transparent); }
+    .sharing-card .icon { font-size: 48px; margin-bottom: 20px; }
+    .sharing-card h3 { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 700; text-transform: uppercase; color: white; margin-bottom: 10px; letter-spacing: 2px; }
+    .sharing-card .price { font-family: 'Oswald', sans-serif; font-size: 42px; font-weight: 700; color: var(--yellow); margin: 15px 0; }
+    .sharing-card p { font-size: 13px; color: var(--gray); line-height: 1.7; }
+    .sharing-card .badge { display: inline-block; background: var(--red); color: white; font-size: 10px; padding: 4px 12px; letter-spacing: 2px; font-family: 'Oswald', sans-serif; margin-bottom: 20px; }
+
+    /* TAGLINE SECTION */
+    .tagline-section { padding: 80px 40px; background: var(--red); text-align: center; }
+    .tagline-section h2 { font-family: 'Oswald', sans-serif; font-size: clamp(36px, 7vw, 80px); font-weight: 700; text-transform: uppercase; color: white; line-height: 1; }
+    .tagline-section h2 span { color: var(--yellow); }
+    .tagline-section p { color: rgba(255,255,255,0.7); font-size: 14px; letter-spacing: 3px; margin-top: 15px; font-family: 'Oswald', sans-serif; }
+
+    /* HALAL BADGE */
+    .halal-section { padding: 60px 40px; background: var(--dark); text-align: center; }
+    .halal-badge { display: inline-flex; align-items: center; gap: 20px; border: 2px solid var(--yellow); padding: 20px 40px; }
+    .halal-badge .icon { font-size: 36px; }
+    .halal-badge-text h3 { font-family: 'Oswald', sans-serif; font-size: 24px; font-weight: 700; color: var(--yellow); letter-spacing: 3px; }
+    .halal-badge-text p { font-size: 12px; color: var(--gray); letter-spacing: 2px; }
+
+    /* CONTACT / ORDER */
+    .order-section { padding: 100px 40px; background: var(--black); text-align: center; }
+    .order-section h2 { font-family: 'Oswald', sans-serif; font-size: clamp(36px, 6vw, 64px); font-weight: 700; text-transform: uppercase; margin-bottom: 15px; }
+    .order-section h2 span { color: var(--red); }
+    .order-section p { color: var(--gray); font-size: 14px; margin-bottom: 50px; letter-spacing: 1px; }
+    .order-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+    .whatsapp-btn { display: flex; align-items: center; gap: 12px; background: #25D366; color: white; padding: 18px 40px; text-decoration: none; font-size: 14px; font-weight: 700; letter-spacing: 2px; font-family: 'Oswald', sans-serif; transition: all 0.3s; }
+    .whatsapp-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(37,211,102,0.3); }
+    .instagram-btn { display: flex; align-items: center; gap: 12px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; padding: 18px 40px; text-decoration: none; font-size: 14px; font-weight: 700; letter-spacing: 2px; font-family: 'Oswald', sans-serif; transition: all 0.3s; }
+    .instagram-btn:hover { transform: translateY(-3px); }
+
+    /* FOOTER */
+    footer { background: #050505; border-top: 2px solid var(--red); padding: 50px 60px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+    .footer-logo img { height: 50px; }
+    .footer-tagline { font-family: 'Oswald', sans-serif; font-size: 16px; color: var(--yellow); letter-spacing: 2px; }
+    .footer-social { display: flex; gap: 15px; }
+    .footer-social a { width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); text-decoration: none; transition: all 0.3s; font-size: 14px; }
+    .footer-social a:hover { border-color: var(--red); color: var(--red); }
+    footer p { color: #333; font-size: 12px; width: 100%; text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #111; }
+
+    /* FADE IN */
+    .fade-in { opacity: 0; transform: translateY(25px); transition: all 0.8s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 12px 20px; }
+      .nav-links { display: none; }
+      .featured-grid { grid-template-columns: 1fr 1fr; }
+      .featured-card.large { grid-column: span 2; }
+      .featured-card img { height: 220px; }
+      .featured-card.large img { height: 280px; }
+      .menu-section { padding: 60px 20px; }
+      .menu-items-grid { grid-template-columns: 1fr; }
+      .menu-item.full { grid-column: span 1; }
+      .extras-grid { grid-template-columns: 1fr 1fr; }
+      .sweets-grid { grid-template-columns: 1fr 1fr; }
+      .drinks-grid { grid-template-columns: 1fr 1fr; }
+      .sharing-grid { grid-template-columns: 1fr; }
+      .featured { padding: 60px 20px; }
+      .sharing { padding: 60px 20px; }
+      .order-section { padding: 60px 20px; }
+      footer { padding: 30px 20px; flex-direction: column; text-align: center; }
+      .menu-tabs { gap: 5px; }
+      .menu-tab { padding: 10px 15px; font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-logo">
+      <img src="images/logo.jpeg" alt="Flats N' Bites">
+    </div>
+    <div class="nav-links">
+      <a href="#featured">Dishes</a>
+      <a href="#menu">Menu</a>
+      <a href="#sharing">Sharing</a>
+      <a href="#order">Order Now</a>
+      <a href="#order" class="nav-order">ORDER NOW</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-pattern"></div>
+    <div class="hero-content">
+      <div class="hero-logo">
+        <img src="images/logo.jpeg" alt="Flats N' Bites">
+      </div>
+      <div class="hero-tag">✦ HALAL CERTIFIED ✦ LEBANON ✦</div>
+      <h1 class="hero-title">
+        <span class="red">FLATS</span><br>
+        <span class="yellow">N'</span> BITES
+      </h1>
+      <div class="hero-sub">As Flat As Your Stomach</div>
+      <div class="hero-buttons">
+        <a href="#menu" class="btn-red">VIEW MENU</a>
+        <a href="#featured" class="btn-yellow">SIGNATURE DISHES</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>SCROLL</span>
+      <i class="fas fa-chevron-down scroll-arrow"></i>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="marquee-inner">
+      <span>FLAT BURGERS</span><span class="dot"> 🍔 </span>
+      <span>LOADED FRIES</span><span class="dot"> 🍟 </span>
+      <span>CRISPY WINGS</span><span class="dot"> 🍗 </span>
+      <span>WOW-FFLES</span><span class="dot"> 🧇 </span>
+      <span>HALAL CERTIFIED</span><span class="dot"> ✦ </span>
+      <span>FLAT BURGERS</span><span class="dot"> 🍔 </span>
+      <span>LOADED FRIES</span><span class="dot"> 🍟 </span>
+      <span>CRISPY WINGS</span><span class="dot"> 🍗 </span>
+      <span>WOW-FFLES</span><span class="dot"> 🧇 </span>
+      <span>HALAL CERTIFIED</span><span class="dot"> ✦ </span>
+    </div>
+  </div>
+
+  <!-- FEATURED DISHES -->
+  <section class="featured" id="featured">
+    <div class="section-header fade-in">
+      <span class="tag">// SIGNATURE DISHES</span>
+      <h2>Our <span class="red">Best</span> <span class="yellow">Sellers</span></h2>
+      <p>Handcrafted with the finest ingredients. Every bite tells a story.</p>
+    </div>
+    <div class="featured-grid fade-in">
+      <div class="featured-card large">
+        <div class="featured-badge yellow">BEST SELLER</div>
+        <img src="images/8.jpeg" alt="Ranchy Loaded Fries">
+        <div class="featured-card-overlay"></div>
+        <div class="featured-card-info">
+          <h3>Ranchy Loaded Fries</h3>
+          <div class="price">$7.5</div>
+        </div>
+      </div>
+      <div class="featured-card">
+        <div class="featured-badge">MUST TRY</div>
+        <img src="images/9.jpeg" alt="Truffle Fries">
+        <div class="featured-card-overlay"></div>
+        <div class="featured-card-info">
+          <h3>Truffle Fries</h3>
+          <div class="price">$9</div>
+        </div>
+      </div>
+      <div class="featured-card">
+        <img src="images/10.jpeg" alt="Fries and Beef">
+        <div class="featured-card-overlay"></div>
+        <div class="featured-card-info">
+          <h3>Fries & Beef</h3>
+          <div class="price">$8</div>
+        </div>
+      </div>
+      <div class="featured-card">
+        <img src="images/7.jpeg" alt="Fries and Chicken">
+        <div class="featured-card-overlay"></div>
+        <div class="featured-card-info">
+          <h3>Fries & Chicken</h3>
+          <div class="price">$7.5</div>
+        </div>
+      </div>
+      <div class="featured-card">
+        <div class="featured-badge">HOT 🔥</div>
+        <img src="images/6.jpeg" alt="Fries Beef Bacon">
+        <div class="featured-card-overlay"></div>
+        <div class="featured-card-info">
+          <h3>Fries Beef & Bacon</h3>
+          <div class="price">$8.5</div>
+        </div>
+      </div>
+      <div class="featured-card">
+        <img src="images/3.jpeg" alt="Chicken Tenders">
+        <div class="featured-card-overlay"></div>
+        <div class="featured-card-info">
+          <h3>Chicken Tenders</h3>
+          <div class="price">$8</div>
+        </div>
+      </div>
+      <div class="featured-card">
+        <div class="featured-badge yellow">CRISPY</div>
+        <img src="images/4.jpeg" alt="Wings">
+        <div class="featured-card-overlay"></div>
+        <div class="featured-card-info">
+          <h3>Wings 6 pcs</h3>
+          <div class="price">$5</div>
+        </div>
+      </div>
+      <div class="featured-card">
+        <img src="images/2.jpeg" alt="Curly Fries">
+        <div class="featured-card-overlay"></div>
+        <div class="featured-card-info">
+          <h3>Curly Fries</h3>
+          <div class="price">$5.5</div>
+        </div>
+      </div>
+      <div class="featured-card">
+        <img src="images/5.jpeg" alt="Wedges">
+        <div class="featured-card-overlay"></div>
+        <div class="featured-card-info">
+          <h3>Wedges</h3>
+          <div class="price">$3.5</div>
+        </div>
+      </div>
+      <div class="featured-card large">
+        <div class="featured-badge">ICONIC</div>
+        <img src="images/12.jpeg" alt="Long Fries">
+        <div class="featured-card-overlay"></div>
+        <div class="featured-card-info">
+          <h3>Long Fries 30cm</h3>
+          <div class="price">$6</div>
+        </div>
+      </div>
+      <div class="featured-card">
+        <img src="images/11.jpeg" alt="Fries">
+        <div class="featured-card-overlay"></div>
+        <div class="featured-card-info">
+          <h3>Classic Fries</h3>
+          <div class="price">$2.5</div>
+        </div>
+      </div>
+      <div class="featured-card">
+        <img src="images/1.jpeg" alt="Chicken Caesar">
+        <div class="featured-card-overlay"></div>
+        <div class="featured-card-info">
+          <h3>Chicken Caesar Salad</h3>
+          <div class="price">$5.5</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAGLINE -->
+  <div class="tagline-section">
+    <h2>AS FLAT AS <span>YOUR STOMACH</span></h2>
+    <p>✦ FLATS N' BITES — LEBANON ✦</p>
+  </div>
+
+  <!-- SHARING BOXES -->
+  <section class="sharing" id="sharing">
+    <div class="section-header fade-in">
+      <span class="tag">// FOR THE CREW</span>
+      <h2>Sharing <span class="yellow">Boxes</span></h2>
+      <p>Because the best food is enjoyed together.</p>
+    </div>
+    <div class="sharing-grid fade-in">
+      <div class="sharing-card">
+        <div class="badge">SHARING BOX</div>
+        <div class="icon">🌋</div>
+        <h3>Cheesy Volcano</h3>
+        <div class="price">$33</div>
+        <p>12 chicken strips + 24 mini burgers (chicken & beef mix) + Cheddar cheese fountain. The ultimate sharing experience.</p>
+      </div>
+      <div class="sharing-card">
+        <div class="badge">PARTY BOX</div>
+        <div class="icon">🎉</div>
+        <h3>Mini Pocket</h3>
+        <div class="price">$15</div>
+        <p>12 mini burgers in one box. Choose from: Mix beef & chicken with regular fries, Mix beef with regular fries, or Mix chicken with regular fries.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FULL MENU -->
+  <section class="menu-section" id="menu">
+    <div class="section-header fade-in">
+      <span class="tag">// FULL MENU</span>
+      <h2>What Are You <span class="red">Craving</span><span class="yellow">?</span></h2>
+    </div>
+
+    <div class="menu-tabs">
+      <div class="menu-tab active" onclick="showTab('appetizers')">Appetizers</div>
+      <div class="menu-tab" onclick="showTab('burgers')">Flat Burgers</div>
+      <div class="menu-tab" onclick="showTab('fries')">Fries</div>
+      <div class="menu-tab" onclick="showTab('sweets')">Sweets</div>
+      <div class="menu-tab" onclick="showTab('drinks')">Drinks</div>
+      <div class="menu-tab" onclick="showTab('extras')">Sauces & Extras</div>
+    </div>
+
+    <!-- APPETIZERS -->
+    <div class="menu-content active" id="tab-appetizers">
+      <div class="menu-category">
+        <div class="menu-category-title">🥗 Fresh Corner</div>
+        <div class="menu-items-grid">
+          <div class="menu-item full">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Chicken Caesar Salad</div>
+              <div class="menu-item-desc">Lettuce, parmesan cheese, crouton, grilled chicken, toasted with special caesar dressing</div>
+            </div>
+            <div class="menu-item-price">$5.5</div>
+          </div>
+        </div>
+      </div>
+      <div class="menu-category">
+        <div class="menu-category-title">🍗 Appetizers</div>
+        <div class="menu-items-grid">
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Say Cheese Combo</div>
+              <div class="menu-item-desc">2 Mozzarella sticks, 2 Halloumi sticks, 2 Jalapeño bites, 2 Cheese balls — honey mustard or classic sauce</div>
+            </div>
+            <div class="menu-item-price">$7</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Biteme Tenders</div>
+              <div class="menu-item-desc">5 Chicken tenders served with honey mustard sauce</div>
+            </div>
+            <div class="menu-item-price">$8</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Corn Delight</div>
+              <div class="menu-item-desc">Cheetos, cheese, secret white sauce</div>
+            </div>
+            <div class="menu-item-price">$6.5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Wings 6 pcs</div>
+              <div class="menu-item-desc">Honey mustard / Spicy BBQ / BBQ / Buffalo</div>
+            </div>
+            <div class="menu-item-price">$5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Cheese Balls 6 pcs</div>
+            </div>
+            <div class="menu-item-price">$5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Halloumi Stick 4 pcs</div>
+            </div>
+            <div class="menu-item-price">$5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Mozzarella Stick 4 pcs</div>
+            </div>
+            <div class="menu-item-price">$5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Jalapeños Cheese Bites 3 pcs</div>
+            </div>
+            <div class="menu-item-price">$3.5</div>
+          </div>
+        </div>
+      </div>
+      <div class="menu-category">
+        <div class="menu-category-title">🎁 Deals</div>
+        <div class="menu-items-grid">
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Combo</div>
+              <div class="menu-item-desc">Fries & soft drink</div>
+            </div>
+            <div class="menu-item-price">+$3</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Kids Meal (Beef or Chicken)</div>
+              <div class="menu-item-desc">Chicken, fries, juice & toy</div>
+            </div>
+            <div class="menu-item-price">$7</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Kids Meal Tender</div>
+              <div class="menu-item-desc">3 Chicken tenders, fries, juice & toy</div>
+            </div>
+            <div class="menu-item-price">$7</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BURGERS -->
+    <div class="menu-content" id="tab-burgers">
+      <div class="menu-category">
+        <div class="menu-category-title">🍔 Our Signature Flat Burgers</div>
+        <div class="menu-items-grid">
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Classic Burger</div>
+              <div class="menu-item-desc">Burger patty or grilled chicken, cheddar, dill pickles & classic signature sauce</div>
+            </div>
+            <div class="menu-item-price">$7</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">BBQ Bacon Burger (Beef)</div>
+              <div class="menu-item-desc">Burger patty, cheddar, bacon, grilled onions, mayo & BBQ sauce</div>
+            </div>
+            <div class="menu-item-price">$8.5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Flaming Burger 🔥</div>
+              <div class="menu-item-desc">Burger patty or grilled chicken, cheddar, jalapeños & flaming sauce</div>
+            </div>
+            <div class="menu-item-price">$7</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Truffle Burger</div>
+              <div class="menu-item-desc">Burger patty, swiss cheese, grilled onions, grilled mushroom, rocca & truffle sauce</div>
+            </div>
+            <div class="menu-item-price">$8.5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Crispy Chicken Burger</div>
+              <div class="menu-item-desc">Crispy or grilled chicken breast, cheddar, coleslaw, spicy BBQ sauce, dill pickles</div>
+            </div>
+            <div class="menu-item-price">$8</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Swiss Mushroom</div>
+              <div class="menu-item-desc">Beef patty or grilled chicken, swiss cheese, onions, mushroom, swiss sauce</div>
+            </div>
+            <div class="menu-item-price">$9</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Chicken Honey Mustard</div>
+              <div class="menu-item-desc">Crispy or grilled chicken breast, honey mustard, rocca, dill pickles</div>
+            </div>
+            <div class="menu-item-price">$8.5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Flat O' Cheese</div>
+              <div class="menu-item-desc">Mozzarella, iceberg, dill pickles, our classic signature sauce</div>
+            </div>
+            <div class="menu-item-price">$6</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Signature Ranch</div>
+              <div class="menu-item-desc">Chicken, beef bacon, cheddar, rocca & ranch sauce</div>
+            </div>
+            <div class="menu-item-price">$9</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Flatty Lebanese</div>
+              <div class="menu-item-desc">Beef patty, coleslaw, tomato, onion, ketchup</div>
+            </div>
+            <div class="menu-item-price">$5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Flatty Falafel</div>
+              <div class="menu-item-desc">Lettuce, tomato, pickles, tarator</div>
+            </div>
+            <div class="menu-item-price">$4</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Flatty Fish</div>
+              <div class="menu-item-desc">Fish fillet, iceberg, dill pickles, cheddar cheese, fisherman's DIP</div>
+            </div>
+            <div class="menu-item-price">$6</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FRIES -->
+    <div class="menu-content" id="tab-fries">
+      <div class="menu-category">
+        <div class="menu-category-title">🍟 FRIIIIIIIIES</div>
+        <div class="menu-items-grid">
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Long Fries 30 CM 📏</div>
+            </div>
+            <div class="menu-item-price">$6</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Truffle Fries</div>
+              <div class="menu-item-desc">Fries, truffle, parmesan</div>
+            </div>
+            <div class="menu-item-price">$9</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Ranchy Loaded Fries</div>
+              <div class="menu-item-desc">Fries, chicken, melted cheddar, ranch sauce</div>
+            </div>
+            <div class="menu-item-price">$7.5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Classic Fries</div>
+            </div>
+            <div class="menu-item-price">$2.5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Fries & Chicken</div>
+              <div class="menu-item-desc">BBQ mayo jalapeños</div>
+            </div>
+            <div class="menu-item-price">$7.5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Fries & Beef</div>
+              <div class="menu-item-desc">BBQ cheddar jalapeños</div>
+            </div>
+            <div class="menu-item-price">$8</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Fries Beef & Bacon</div>
+              <div class="menu-item-desc">BBQ jalapeños</div>
+            </div>
+            <div class="menu-item-price">$8.5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Wedges</div>
+              <div class="menu-item-desc">Served with classic sauce</div>
+            </div>
+            <div class="menu-item-price">$3.5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Curly Fries</div>
+              <div class="menu-item-desc">Served with cheddar sauce</div>
+            </div>
+            <div class="menu-item-price">$5.5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SWEETS -->
+    <div class="menu-content" id="tab-sweets">
+      <div class="menu-category">
+        <div class="menu-category-title">🍰 Speciality</div>
+        <div class="menu-items-grid">
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">ChocoBerry Treats</div>
+            </div>
+            <div class="menu-item-price">$6</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Cloud Delight</div>
+              <div class="menu-item-desc">Two layers of mille-feuille filled with luscious crème pâtissière, finished with fresh strawberry slices</div>
+            </div>
+            <div class="menu-item-price">$6</div>
+          </div>
+        </div>
+      </div>
+      <div class="menu-category">
+        <div class="menu-category-title">🥞 Crêpes</div>
+        <div class="menu-items-grid">
+          <div class="menu-item">
+            <div class="menu-item-left"><div class="menu-item-name">Nutella</div></div>
+            <div class="menu-item-price">$4.5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><div class="menu-item-name">Kinder</div></div>
+            <div class="menu-item-price">$5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><div class="menu-item-name">White Chocolate</div></div>
+            <div class="menu-item-price">$4.5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><div class="menu-item-name">Lotus</div></div>
+            <div class="menu-item-price">$4.5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><div class="menu-item-name">Oreo</div></div>
+            <div class="menu-item-price">$5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><div class="menu-item-name">Galaxy</div></div>
+            <div class="menu-item-price">$5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><div class="menu-item-name">Ferrero</div></div>
+            <div class="menu-item-price">$5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Add Toppings / Fruits</div>
+              <div class="menu-item-desc">Price on selection</div>
+            </div>
+            <div class="menu-item-price">+</div>
+          </div>
+        </div>
+      </div>
+      <div class="menu-category">
+        <div class="menu-category-title">🧇 The Wow-ffle Collection</div>
+        <div class="menu-items-grid">
+          <div class="menu-item">
+            <div class="menu-item-left"><div class="menu-item-name">Kinderlicious Wow-ffle</div></div>
+            <div class="menu-item-price">$8.5</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><div class="menu-item-name">Lotus Love Wow-ffle</div></div>
+            <div class="menu-item-price">$8</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><div class="menu-item-name">Oreo Overload Wow-ffle</div></div>
+            <div class="menu-item-price">$8</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><div class="menu-item-name">Pistachio Dream Wow-ffle</div></div>
+            <div class="menu-item-price">$9</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left"><div class="menu-item-name">Choco-Berry Wow-ffle</div></div>
+            <div class="menu-item-price">$7.5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DRINKS -->
+    <div class="menu-content" id="tab-drinks">
+      <div class="menu-category">
+        <div class="menu-category-title">🥤 Feeling Thirsty?</div>
+        <div class="drinks-grid">
+          <div class="drink-item">
+            <div class="drink-icon">🥤</div>
+            <div class="drink-name">Soft Drinks</div>
+            <div class="drink-price">$1</div>
+          </div>
+          <div class="drink-item">
+            <div class="drink-icon">💧</div>
+            <div class="drink-name">Sparkling Water</div>
+            <div class="drink-price">$1.5</div>
+          </div>
+          <div class="drink-item">
+            <div class="drink-icon">🫙</div>
+            <div class="drink-name">Water</div>
+            <div class="drink-price">$0.5</div>
+          </div>
+          <div class="drink-item">
+            <div class="drink-icon">🧋</div>
+            <div class="drink-name">Ice Tea</div>
+            <div class="drink-price">$1.5</div>
+          </div>
+          <div class="drink-item">
+            <div class="drink-icon">🍊</div>
+            <div class="drink-name">Juice</div>
+            <div class="drink-price">$0.5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXTRAS -->
+    <div class="menu-content" id="tab-extras">
+      <div class="menu-category">
+        <div class="menu-category-title">🥫 Add Sauce</div>
+        <div class="extras-grid">
+          <div class="extra-item"><span class="extra-item-name">Classic Signature Sauce</span><span class="extra-item-price">$1</span></div>
+          <div class="extra-item"><span class="extra-item-name">BBQ Sauce</span><span class="extra-item-price">$1</span></div>
+          <div class="extra-item"><span class="extra-item-name">Flaming Sauce 🔥</span><span class="extra-item-price">$1</span></div>
+          <div class="extra-item"><span class="extra-item-name">Truffle Sauce</span><span class="extra-item-price">$1.5</span></div>
+          <div class="extra-item"><span class="extra-item-name">Spicy BBQ Sauce</span><span class="extra-item-price">$1</span></div>
+          <div class="extra-item"><span class="extra-item-name">Cheddar Cheese</span><span class="extra-item-price">$1.5</span></div>
+          <div class="extra-item"><span class="extra-item-name">Honey Mustard</span><span class="extra-item-price">$1</span></div>
+          <div class="extra-item"><span class="extra-item-name">Mushroom Sauce</span><span class="extra-item-price">$1.5</span></div>
+          <div class="extra-item"><span class="extra-item-name">Ranch Sauce</span><span class="extra-item-price">$1.5</span></div>
+          <div class="extra-item"><span class="extra-item-name">Fisherman's Dip</span><span class="extra-item-price">$1.5</span></div>
+          <div class="extra-item"><span class="extra-item-name">Caesar Dressing</span><span class="extra-item-price">$2</span></div>
+        </div>
+      </div>
+      <div class="menu-category" style="margin-top: 30px;">
+        <div class="menu-category-title">➕ Extra Add-ons</div>
+        <div class="extras-grid">
+          <div class="extra-item"><span class="extra-item-name">Beef</span><span class="extra-item-price">$2</span></div>
+          <div class="extra-item"><span class="extra-item-name">Double Beef</span><span class="extra-item-price">$3.5</span></div>
+          <div class="extra-item"><span class="extra-item-name">Chicken</span><span class="extra-item-price">$2</span></div>
+          <div class="extra-item"><span class="extra-item-name">Bacon</span><span class="extra-item-price">$2</span></div>
+          <div class="extra-item"><span class="extra-item-name">Double Bacon</span><span class="extra-item-price">$3.5</span></div>
+          <div class="extra-item"><span class="extra-item-name">Cheddar Cheese Slice</span><span class="extra-item-price">$1</span></div>
+          <div class="extra-item"><span class="extra-item-name">Swiss Cheese Slice</span><span class="extra-item-price">$1</span></div>
+          <div class="extra-item"><span class="extra-item-name">Mozzarella</span><span class="extra-item-price">$1</span></div>
+          <div class="extra-item"><span class="extra-item-name">Cheesy Patty (mozz + cheddar)</span><span class="extra-item-price">$2</span></div>
+          <div class="extra-item"><span class="extra-item-name">Coleslaw Salad</span><span class="extra-item-price">$1.5</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HALAL -->
+  <div class="halal-section fade-in">
+    <div class="halal-badge">
+      <div class="icon">🕌</div>
+      <div class="halal-badge-text">
+        <h3>HALAL CERTIFIED</h3>
+        <p>ALL OUR MEAT IS 100% HALAL</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDER SECTION -->
+  <section class="order-section" id="order">
+    <h2>ORDER <span>NOW</span></h2>
+    <p>Place your order directly via WhatsApp or follow us on Instagram for the latest drops</p>
+    <div class="order-buttons">
+      <a href="https://wa.me/961XXXXXXXX" class="whatsapp-btn">
+        <i class="fab fa-whatsapp" style="font-size:22px;"></i> ORDER ON WHATSAPP
+      </a>
+      <a href="https://instagram.com/flatsnbites" target="_blank" class="instagram-btn">
+        <i class="fab fa-instagram" style="font-size:22px;"></i> @flatsnbites
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      <img src="images/logo.jpeg" alt="Flats N' Bites">
+    </div>
+    <div class="footer-tagline">AS FLAT AS YOUR STOMACH 🍔</div>
+    <div class="footer-social">
+      <a href="https://instagram.com/flatsnbites" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+    </div>
+    <p>© 2024 Flats N' Bites — Lebanon. All rights reserved. | 100% Halal Certified</p>
+  </footer>
+
+  <script>
+    // MENU TABS
+    function showTab(tab) {
+      document.querySelectorAll('.menu-content').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // SCROLL ANIMATIONS
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
